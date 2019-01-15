@@ -1,6 +1,6 @@
 # nextjs commit # 48d54c2
 
-# now 15-01-2018
+# Create at 15-01-2018
 
 ## How to use Apollo with next
 

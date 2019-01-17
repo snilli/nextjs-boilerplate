@@ -1,0 +1,16 @@
+[0;1;31m●[0m nginx.service - A high performance web server and a reverse proxy server
+   Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+   Active: [0;1;31mfailed[0m (Result: exit-code) since Thu 2019-01-17 10:56:56 +07; 29s ago
+     Docs: man:nginx(8)
+  Process: 7351 ExecStop=/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid (code=exited, status=0/SUCCESS)
+  Process: 6462 ExecReload=/usr/sbin/nginx -g daemon on; master_process on; -s reload [0;1;31m(code=exited, status=1/FAILURE)[0m
+  Process: 7297 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+  Process: 16958 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; [0;1;31m(code=exited, status=1/FAILURE)[0m
+ Main PID: 7301 (code=exited, status=0/SUCCESS)
+
+Jan 17 10:56:56 snilli-Inspiron-15-3567 systemd[1]: Starting A high performance web server and a reverse proxy server...
+Jan 17 10:56:56 snilli-Inspiron-15-3567 nginx[16958]: nginx: [emerg] open() "/etc/nginx/nginxconfig.io/proxy.conf" failed (2: No such file or directory) in /etc/nginx/sites-enabled/exam.conf:16
+Jan 17 10:56:56 snilli-Inspiron-15-3567 nginx[16958]: nginx: configuration file /etc/nginx/nginx.conf test failed
+Jan 17 10:56:56 snilli-Inspiron-15-3567 systemd[1]: [0;1;39m[0;1;31m[0;1;39mnginx.service: Control process exited, code=exited status=1[0m
+Jan 17 10:56:56 snilli-Inspiron-15-3567 systemd[1]: [0;1;39m[0;1;31m[0;1;39mnginx.service: Failed with result 'exit-code'.[0m
+Jan 17 10:56:56 snilli-Inspiron-15-3567 systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start A high performance web server and a reverse proxy server.[0m

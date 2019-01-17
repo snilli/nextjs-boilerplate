@@ -16,6 +16,7 @@ yarn create next-app --example with-apollo with-apollo-app
 yarn add dotenv-webpack # with Dotenv
 yarn add @zeit/next-less antd babel-plugin-import less less-vars-to-js # with ant design less
 yarn add react-redux redux redux-devtools-extension redux-persist redux-thunk # with redux
+yarn add -D eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react prettier eslint-config-prettier eslint-plugin-prettier babel-eslint # format code
 ```
 
 ### create file next.config.js at root folder
@@ -189,6 +190,70 @@ export default class MyDocument extends Document {
       </html>
     );
   }
+}
+```
+
+### create file .eslintrc root folder
+
+```
+{
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react",
+    "plugin:react/recommended"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "no-use-before-define": [
+      "error",
+      { "functions": true, "classes": true, "variables": false }
+    ],
+    "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+    "react/display-name": false,
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "printWidth": 100
+      }
+    ]
+  },
+  "plugins": ["prettier"]
+}
+```
+
+### create file .prettierignore
+
+```
+**/*{.,-}min.js
+/lib/
+/example/lib/
+/native-example/lib/
+/native-package/lib/
+/expo-package/lib/
+/flow-typed/
+/docs/
+/.git/
+**/*.sh
+```
+
+### create file .prettierrc
+
+```
+{
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "arrowParens": "always",
+  "tabWidth": 2
 }
 ```
 

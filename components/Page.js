@@ -6,7 +6,7 @@ import { dispatchers } from '../store'
 
 const { Header, Content, Footer, Sider } = Layout
 
-const tabTitle = ['nav 1', 'nav 2', 'nav 3', 'nav 4']
+const tabTitle = ['/', '/exam', '/ant', '/about']
 
 class Page extends Component {
   static propTypes = {
@@ -17,12 +17,18 @@ class Page extends Component {
     tabSelected: PropTypes.number.isRequired,
   }
 
-  onClickSlider = (event) => {
-    const { textContent: content } = event.target
-    const tabSelected = tabTitle.findIndex((item) => item === content) + 1
-    const { actions } = this.props
+  componentWillMount() {
+    const { router, actions } = this.props
+    const tabSelected = tabTitle.findIndex((item) => item === router.route) + 1
 
     actions.changeTab(tabSelected)
+  }
+
+  onClickSlider = (event) => {
+    // const { textContent: content } = event.target
+    // const tabSelected = tabTitle.findIndex((item) => item === content) + 1
+    // const { actions } = this.props
+    // actions.changeTab(tabSelected)
   }
 
   render() {

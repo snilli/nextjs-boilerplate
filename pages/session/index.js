@@ -1,7 +1,10 @@
-import React from 'react'
-import Router from 'next/router'
-import Link from 'next/link'
+import React, { Component } from 'react'
 
-const Index = (props) => <div>session</div>
+class SessionIndex extends Component {
+  onLoad = (e) => {}
 
-export default Index
+  render() {
+    return <div>session</div>
+  }
+}
+export default SessionIndex

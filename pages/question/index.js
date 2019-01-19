@@ -1,29 +1,10 @@
-import React from 'react'
-import Router from 'next/router'
-import Link from 'next/link'
+import React, { Component } from 'react'
 
-const Index = (props) => (
-  <div>
-    <button
-      type="button"
-      onClick={() =>
-        Router.push({
-          pathname: '/',
-          query: { name: 'Zeit' },
-        })
-      }
-    >
-      sdsd
-    </button>
-    <Link
-      href={{
-        pathname: '/',
-        query: { name: 'Zeit' },
-      }}
-    >
-      <a>555</a>
-    </Link>
-  </div>
-)
+class QuestionIndex extends Component {
+  onLoad = (e) => {}
 
-export default Index
+  render() {
+    return <div>question</div>
+  }
+}
+export default QuestionIndex

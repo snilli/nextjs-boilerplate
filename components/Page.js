@@ -2,12 +2,38 @@ import { Menu, Icon, Layout } from 'antd'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Link from 'next/link'
 import { dispatchers } from '../store'
 
 const { Header, Content, Footer, Sider } = Layout
 
 const tabTitle = ['/', '/exam', '/ant', '/about']
-
+const tabData = [
+  {
+    id: 1,
+    title: 'Question',
+    icon: 'user',
+    path: '/question',
+  },
+  {
+    id: 2,
+    title: 'Exam',
+    icon: 'user',
+    path: '/exam',
+  },
+  {
+    id: 3,
+    title: 'Session',
+    icon: 'user',
+    path: 'session',
+  },
+  {
+    id: 4,
+    title: 'Log Out',
+    icon: 'user',
+    path: '/',
+  },
+]
 class Page extends Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
@@ -17,18 +43,20 @@ class Page extends Component {
     tabSelected: PropTypes.number.isRequired,
   }
 
-  componentWillMount() {
-    const { router, actions } = this.props
-    const tabSelected = tabTitle.findIndex((item) => item === router.route) + 1
+  // componentWillMount() {
+  //   const { router, actions } = this.props
 
-    actions.changeTab(tabSelected)
-  }
+  //   onst { textContent: content } = event.target
+  //   const tabSelected = tabData.findIndex((item) => item.title === router.route) + 1
+
+  //   actions.changeTab(tabSelected)
+  // }
 
   onClickSlider = (event) => {
-    // const { textContent: content } = event.target
-    // const tabSelected = tabTitle.findIndex((item) => item === content) + 1
-    // const { actions } = this.props
-    // actions.changeTab(tabSelected)
+    const { textContent: content } = event.target
+    const tabSelected = tabData.findIndex((item) => item.title === content) + 1
+    const { actions } = this.props
+    actions.changeTab(tabSelected)
   }
 
   render() {
@@ -38,22 +66,16 @@ class Page extends Component {
         <Sider breakpoint="lg" collapsedWidth="0" onClick={this.onClickSlider}>
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={[tabSelected.toString()]}>
-            <Menu.Item key="1">
-              <Icon type="user" />
-              <span className="nav-text">nav 1</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="video-camera" />
-              <span className="nav-text">nav 2</span>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Icon type="upload" />
-              <span className="nav-text">nav 3</span>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <Icon type="user" />
-              <span className="nav-text">nav 4</span>
-            </Menu.Item>
+            {tabData.map((item) => (
+              <Menu.Item key={item.id}>
+                <Link href={item.path}>
+                  <a href="# ">
+                    <Icon type={item.icon} />
+                    <span className="nav-text">{item.title}</span>
+                  </a>
+                </Link>
+              </Menu.Item>
+            ))}
           </Menu>
         </Sider>
         <Layout>

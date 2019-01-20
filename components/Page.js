@@ -7,7 +7,6 @@ import { dispatchers } from '../store'
 
 const { Header, Content, Footer, Sider } = Layout
 
-const tabTitle = ['/', '/exam', '/ant', '/about']
 const tabData = [
   {
     id: 1,
@@ -25,7 +24,7 @@ const tabData = [
     id: 3,
     title: 'Session',
     icon: 'user',
-    path: 'session',
+    path: '/session',
   },
   {
     id: 4,
@@ -69,10 +68,10 @@ class Page extends Component {
             {tabData.map((item) => (
               <Menu.Item key={item.id}>
                 <Link href={item.path}>
-                  <a href="# ">
+                  <div>
                     <Icon type={item.icon} />
                     <span className="nav-text">{item.title}</span>
-                  </a>
+                  </div>
                 </Link>
               </Menu.Item>
             ))}

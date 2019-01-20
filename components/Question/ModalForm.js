@@ -9,8 +9,9 @@ const ModelForm = create()((props) => {
   return (
     <Modal visible={visible} title={title} okText="Create" onCancel={onCancel} onOk={onCreate}>
       <Form layout="vertical">
-        <FormItem label="Title">
+        <FormItem label="Name">
           {getFieldDecorator('name', {
+            initialValue: props.value,
             rules: [{ required: true, message: 'กรุณาใส่ชื่อที่ท่านต้องการ' }],
           })(<Input />)}
         </FormItem>

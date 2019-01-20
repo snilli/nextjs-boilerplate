@@ -26,6 +26,12 @@
         "singleQuote": true,
         "printWidth": 100
       }
+    ],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"]
+      }
     ]
   },
   "plugins": ["prettier"]

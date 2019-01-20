@@ -3,30 +3,30 @@
     "id": 1,
     "title": "ภาษาไทย",
     "sheet": false,
-    "parent_id": null
+    "parentId": null
   },
   {
     "id": 2,
     "title": "ภาษาอังกฤษ",
     "sheet": false,
-    "parent_id": null
+    "parentId": null
   },
   {
     "id": 3,
     "title": "คณิตศาสตร์",
     "sheet": false,
-    "parent_id": null
+    "parentId": null
   },
   {
     "id": 4,
     "title": "ศิลปะ",
     "sheet": false,
-    "parent_id": null
+    "parentId": null
   },
   {
     "id": 5,
     "title": "ดีจ้า",
     "sheet": true,
-    "parent_id": 2
+    "parentId": 3
   }
 ]

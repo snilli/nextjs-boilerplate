@@ -31,7 +31,11 @@ const ChildInHood = ({ parentId }) => (
       if (error) return `[[Error!]]: ${error}`
 
       return data.children.studentList.map((student) => (
-        <img key={student.code} alt={student.code} src={student.imageUrl} width="100" />
+        <div>
+          <img key={student.code} alt={student.code} src={student.imageUrl} width="100" />
+          <img key={student.code} alt={student.code} src={student.imageUrl} width="100" />
+          <img key={student.code} alt={student.code} src={student.imageUrl} width="100" />
+        </div>
       ))
     }}
   </Query>

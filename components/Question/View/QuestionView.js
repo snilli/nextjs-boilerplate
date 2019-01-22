@@ -7,7 +7,7 @@ const { Group: RadioGroup } = Radio
 const { Group: CheckboxGroup } = Checkbox
 
 const handleRadio = (choise, answer) => (
-  <RadioGroup defaultValue={answer}>
+  <RadioGroup defaultValue={answer} size="large">
     {choise.map((item, index) => (
       <Radio key={`${index}${item}`} value={item} disabled>
         {item}
@@ -21,15 +21,14 @@ const handleCheckbox = (choise, answer) => {
     label: item,
     value: item,
   }))
-  console.log(answer)
-  return <CheckboxGroup options={option} disabled defaultValue={answer} />
+  return <CheckboxGroup size="large" options={option} disabled defaultValue={answer} />
 }
 
 const handleInput = () => {}
 
-const QuestionView = ({ question }) => (
+const QuestionView = ({ questionList }) => (
   <div>
-    {question.map((item, index) => {
+    {questionList.map((item, index) => {
       const { type, choise, answer, title } = item
       let anwser = <div />
       switch (type) {
@@ -46,7 +45,7 @@ const QuestionView = ({ question }) => (
       return (
         <div key={item.id}>
           <Grid
-            style={{ width: '100%', fontSize: '16px', overflowX: 'auto', whiteSpace: 'nowrap' }}
+            style={{ width: '100%', fontSize: '18px', overflowX: 'auto', whiteSpace: 'nowrap' }}
           >
             <div style={{ float: 'left' }}>
               {index + 1}. {title}
@@ -62,7 +61,7 @@ const QuestionView = ({ question }) => (
 )
 
 QuestionView.propTypes = {
-  question: PropTypes.instanceOf(Array).isRequired,
+  questionList: PropTypes.instanceOf(Array).isRequired,
 }
 
 export default QuestionView

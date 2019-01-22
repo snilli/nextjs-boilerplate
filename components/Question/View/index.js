@@ -6,6 +6,8 @@ import InfoButton from './InfoButton'
 import QuestionView from './QuestionView'
 import Directory from './Directory'
 
+import AddQuestion from './OverallQuestion/AddQuestion'
+
 const { Grid } = Card
 
 const dataMock = require('./mockTree.json')
@@ -57,12 +59,13 @@ class Demo extends React.Component {
       treeData: data,
       genData: arrayToTree(data, { parentProperty: 'parentId' }),
       nodeSelect: root,
-      question: [],
+      questionList: [],
       visible: {
         folder: false,
         sheet: false,
         info: false,
         rename: false,
+        question: false,
       },
     }
     // bind this for pass to InfoButton
@@ -77,6 +80,9 @@ class Demo extends React.Component {
     this.handleClickInfo = this.handleClickInfo.bind(this)
     // bind this for pass to Directory
     this.handleSelectTreeNode = this.handleSelectTreeNode.bind(this)
+    // bind this for add question
+    this.saveAddQuestionFormRef = this.saveAddQuestionFormRef.bind(this)
+    this.handleSelectChange = this.handleSelectChange.bind(this)
   }
 
   handleSelectTreeNode = (selectedKeys, info) => {
@@ -84,15 +90,15 @@ class Demo extends React.Component {
     const { treeData } = this.state
     const [id] = selectedKeys.map((item) => parseInt(item, 10))
     const data = treeData.filter((item) => item.id === id)
-    let question = []
+    let questionList = []
     if (data.length > 0) {
       if (data[0].sheet) {
-        question = questionMock.filter((item) => item.parentId === data[0].id)
+        questionList = questionMock.filter((item) => item.parentId === data[0].id)
       }
 
       this.setState({
         nodeSelect: data[0],
-        question,
+        questionList,
       })
     }
   }
@@ -115,7 +121,9 @@ class Demo extends React.Component {
   }
 
   setModelClose = () => {
-    this.setState({ visible: { info: true, folder: false, sheet: false, rename: false } })
+    this.setState({
+      visible: { info: true, folder: false, sheet: false, rename: false, question: false },
+    })
 
     setTimeout(() => this.setState({ visible: { info: false } }), 10)
   }
@@ -153,6 +161,17 @@ class Demo extends React.Component {
         const isSheet = true
         this.handleAllCreate(renameForm, values.name, isSheet, true)
       }
+    })
+  }
+
+  handleCreateQuestion = () => {
+    const { questionForm } = this
+    questionForm.validateFields((err, values) => {
+      // if (!err) {
+      //   const isSheet = true
+      //   this.handleAllCreate(questionForm, values.name, isSheet, true)
+      // }
+      console.log('name ', values)
     })
   }
 
@@ -202,10 +221,17 @@ class Demo extends React.Component {
     this.renameForm = form
   }
 
+  saveAddQuestionFormRef = (form) => {
+    this.questionForm = form
+  }
+
+  handleSelectChange = (value) => {
+    console.log(value)
+  }
+
   render() {
     const { genData } = this.state
-    const { nodeSelect, visible, question } = this.state
-
+    const { nodeSelect, visible, questionList } = this.state
     return (
       <Card>
         <Grid style={gridStyle}>
@@ -231,9 +257,20 @@ class Demo extends React.Component {
             handleRename={this.handleRename}
             handleClickInfo={this.handleClickInfo}
           />
+          {nodeSelect.sheet && (
+            <AddQuestion
+              saveAddQuestionFormRef={this.saveAddQuestionFormRef}
+              showModal={this.showModal}
+              visible={visible}
+              handleModelCancel={this.handleModelCancel}
+              handleCreateQuestion={this.handleCreateQuestion}
+              handleSelectChange={this.handleSelectChange}
+              form={this.questionForm}
+            />
+          )}
         </Grid>
         <Grid style={gridStyle1}>
-          {question.length > 0 && <QuestionView question={question} />}
+          {questionList.length > 0 && <QuestionView questionList={questionList} />}
         </Grid>
       </Card>
     )

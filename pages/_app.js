@@ -3,20 +3,18 @@ import React from 'react'
 import { ApolloProvider } from 'react-apollo'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import withReduxStore from '../lib/with-redux-store'
-import withApolloClient from '../lib/with-apollo-client'
-import initializeStore from '../lib/reducer'
+// import withReduxStore from '../services/store/redux'
+import withApolloClient from '../services/apollo/client'
+import { persistor, store } from '../services/store'
 import Page from '../components/Page'
-
-const { persistor } = initializeStore()
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps, apolloClient, reduxStore, router } = this.props
+    const { Component, pageProps, apolloClient, router } = this.props
     return (
       <Container>
         <ApolloProvider client={apolloClient}>
-          <Provider store={reduxStore}>
+          <Provider store={store}>
             <PersistGate loading="" persistor={persistor}>
               <Page router={router}>
                 <Component {...pageProps} router={router} />
@@ -29,4 +27,4 @@ class MyApp extends App {
   }
 }
 
-export default withApolloClient(withReduxStore(MyApp))
+export default withApolloClient(MyApp)

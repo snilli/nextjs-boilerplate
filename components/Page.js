@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Link from 'next/link'
-import { dispatchers } from '../store'
+import { actionCreators as uiActionCreators, initialState } from '../services/reducers/ui.reducer'
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -28,28 +28,32 @@ const tabData = [
   },
   {
     id: 4,
+    title: 'Apollo',
+    icon: 'user',
+    path: '/apollo',
+  },
+  {
+    id: 5,
     title: 'Log Out',
     icon: 'user',
     path: '/',
   },
 ]
+
 class Page extends Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     actions: PropTypes.shape({
       changeTab: PropTypes.func.isRequired,
     }).isRequired,
-    tabSelected: PropTypes.number.isRequired,
+    ui: PropTypes.shape({
+      tabSelected: PropTypes.number.isRequired,
+    }),
   }
 
-  // componentWillMount() {
-  //   const { router, actions } = this.props
-
-  //   onst { textContent: content } = event.target
-  //   const tabSelected = tabData.findIndex((item) => item.title === router.route) + 1
-
-  //   actions.changeTab(tabSelected)
-  // }
+  static defaultProps = {
+    ui: initialState,
+  }
 
   onClickSlider = (event) => {
     const { textContent: content } = event.target
@@ -59,12 +63,12 @@ class Page extends Component {
   }
 
   render() {
-    const { children, tabSelected } = this.props
+    const { children, ui } = this.props
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider breakpoint="lg" collapsedWidth="0" onClick={this.onClickSlider}>
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={[tabSelected.toString()]}>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={[ui.tabSelected.toString()]}>
             {tabData.map((item) => (
               <Menu.Item key={item.id}>
                 <Link href={item.path}>
@@ -96,7 +100,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   actions: {
     changeTab(tabSelected) {
-      dispatch(dispatchers.changeTab(tabSelected))
+      dispatch(uiActionCreators.changeTab(tabSelected))
     },
   },
 })

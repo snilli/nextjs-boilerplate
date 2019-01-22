@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Popover } from 'antd'
-import ModelForm from './ModalForm'
+import ModalForm from './ModalForm'
 
 const InfoButton = ({
   visible,
@@ -24,7 +24,7 @@ const InfoButton = ({
             <div id="folder" href="# " onClick={showModal} role="presentation">
               New Folder
             </div>
-            <ModelForm
+            <ModalForm
               ref={saveFolderFormRef}
               title="New Folder"
               value=""
@@ -39,7 +39,7 @@ const InfoButton = ({
             <div id="sheet" href="# " onClick={showModal} role="presentation">
               New Sheet
             </div>
-            <ModelForm
+            <ModalForm
               ref={saveSheetFormRef}
               title="New Folder"
               value=""
@@ -54,7 +54,7 @@ const InfoButton = ({
             <div id="rename" onClick={showModal} role="presentation">
               Rename
             </div>
-            <ModelForm
+            <ModalForm
               ref={saveRenameFormRef}
               title="Rename"
               value={nodeSelect.title}

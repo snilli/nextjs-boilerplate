@@ -1,12 +1,12 @@
 import App, { Container } from 'next/app'
 import React from 'react'
+import Head from 'next/head'
 import { ApolloProvider } from 'react-apollo'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-// import withReduxStore from '../services/store/redux'
 import withApolloClient from '../services/apollo/client'
 import { persistor, store } from '../services/store'
-import Page from '../components/Page'
+import Page from '../containers/Page'
 
 class MyApp extends App {
   render() {

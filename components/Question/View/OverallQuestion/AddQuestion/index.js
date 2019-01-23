@@ -11,6 +11,7 @@ const index = ({
   handleCreateQuestion,
   handleSelectChange,
   from,
+  addQuestionChoise,
 }) => (
   <div style={{ float: 'right' }}>
     <Button id="question" type="primary" icon="plus" onClick={showModal}>
@@ -25,6 +26,7 @@ const index = ({
       onCreate={handleCreateQuestion}
       handleSelectChange={handleSelectChange}
       from={from}
+      addQuestionChoise={addQuestionChoise}
     />
   </div>
 )

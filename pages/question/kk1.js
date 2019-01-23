@@ -6,6 +6,7 @@ const RadioGroup = Radio.Group
 class DynamicFieldSet extends Component {
   state = {
     choise: ['', ''],
+    count: 0,
   }
 
   componentDidMount() {
@@ -21,34 +22,33 @@ class DynamicFieldSet extends Component {
     const id = form.getFieldValue('id')
     const choise = form.getFieldValue('choise')
     const anwserIndex = form.getFieldValue('anwserIndex')
+
     // We need at least one passenger
     if (id.length === 1) {
       return
     }
 
     const dddd = anwserIndex === k - 1 ? null : anwserIndex
-    console.log(anwserIndex)
-    console.log(k - 1)
 
     // const kkk = choise.filter((item, index) => index !== k - 1)
-    const kkk = choise.splice(k, 1)
 
-    console.log(choise)
-
-    console.log(kkk)
+    choise.splice(k - 1, 1)
     // can use data-binding to set
     form.setFieldsValue({
       id: id.filter((item) => item !== k),
-      // choise: choise.splice(k, 1),
+      choise: id.filter((item) => item !== k),
       anwserIndex: dddd,
     })
   }
 
   add = () => {
     const { form } = this.props
+    // can use data-binding to get
     const id = form.getFieldValue('id')
-    const nextId = id.concat(id[id.length - 1] + 1)
+    const nextId = id.concat(id.length + 1)
 
+    // can use data-binding to set
+    // important! notify form to detect changes
     form.setFieldsValue({
       id: nextId,
     })
@@ -59,11 +59,6 @@ class DynamicFieldSet extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values)
-
-        const { choise, id, anwserIndex } = values
-
-        const anwser = choise.filter((item, index) => index === anwserIndex)
-        console.log('anwser ', anwser)
       }
     })
   }
@@ -89,11 +84,10 @@ class DynamicFieldSet extends Component {
 
     getFieldDecorator('id', { initialValue: [] })
     const id = getFieldValue('id')
-
     const formItems = id.map((item, index) => (
       <Form.Item key={item}>
         <Radio value={item - 1}>
-          {getFieldDecorator(`choise[${item - 1}]`, {
+          {getFieldDecorator(`id[${item - 1}]`, {
             initialValue: this.state.choise[item - 1],
             rules: [
               {
@@ -117,7 +111,7 @@ class DynamicFieldSet extends Component {
     ))
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Form.Item {...formItemLayoutWithOutLabel}>
+        <Form.Item>
           {getFieldDecorator('anwserIndex', {
             rules: [{ required: true, message: 'กรุณาเลือกข้อที่เป็นเฉลย' }],
           })(<RadioGroup>{formItems}</RadioGroup>)}

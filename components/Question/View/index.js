@@ -1,4 +1,4 @@
-import { Card } from 'antd'
+import { Card, Skeleton } from 'antd'
 import arrayToTree from 'array-to-tree'
 import React from 'react'
 
@@ -83,6 +83,7 @@ class Demo extends React.Component {
     // bind this for add question
     this.saveAddQuestionFormRef = this.saveAddQuestionFormRef.bind(this)
     this.handleSelectChange = this.handleSelectChange.bind(this)
+    this.addQuestionChoise = this.addQuestionChoise.bind(this)
   }
 
   handleSelectTreeNode = (selectedKeys, info) => {
@@ -167,6 +168,9 @@ class Demo extends React.Component {
   handleCreateQuestion = () => {
     const { questionForm } = this
     questionForm.validateFields((err, values) => {
+      if (err) {
+        return
+      }
       // if (!err) {
       //   const isSheet = true
       //   this.handleAllCreate(questionForm, values.name, isSheet, true)
@@ -229,6 +233,18 @@ class Demo extends React.Component {
     console.log(value)
   }
 
+  // add question zone
+  addQuestionChoise = () => {
+    const { questionForm } = this
+    const id = questionForm.getFieldValue('id')
+
+    id.push('')
+
+    questionForm.setFieldsValue({
+      id,
+    })
+  }
+
   render() {
     const { genData } = this.state
     const { nodeSelect, visible, questionList } = this.state
@@ -266,6 +282,7 @@ class Demo extends React.Component {
               handleCreateQuestion={this.handleCreateQuestion}
               handleSelectChange={this.handleSelectChange}
               form={this.questionForm}
+              addQuestionChoise={this.addQuestionChoise}
             />
           )}
         </Grid>

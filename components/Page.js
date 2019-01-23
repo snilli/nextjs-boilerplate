@@ -63,7 +63,7 @@ class Page extends Component {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider breakpoint="lg" collapsedWidth="0" onClick={this.onClickSlider}>
-          <div className="logo" />
+          <div className="logo"> คลังข้อสอบ </div>
           <Menu theme="dark" mode="inline" defaultSelectedKeys={[tabSelected.toString()]}>
             {tabData.map((item) => (
               <Menu.Item key={item.id}>

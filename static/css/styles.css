@@ -8,6 +8,7 @@
   flex-direction: row;
   align-items: center;
   overflow: hidden;
+  z-index: 2;
 }
 .app-header-logo {
   width: 48px;
@@ -131,4 +132,127 @@
 .ant-drawer-close:hover {
   color: rgba(255, 255, 255, 1);
   text-decoration: none;
+}
+
+.app-login {
+  width: 100%;
+  height: 100%;
+}
+.app-login-header {
+  height: 58px;
+  flex: 0 0 58px;
+  background: #fff;
+  border-bottom: 1px solid #d9d9d9;
+  font-size: 20px;
+  font-weight: bold;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+}
+.app-login-header-logo {
+  width: 48px;
+  height: 48px;
+  margin-right: 10px;
+}
+.app-login-content {
+  flex: 1;
+  flex-direction: row;
+  min-height: 100vh;
+  margin-bottom: -58px;
+}
+
+.app-login-content-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.app-login-content-form .mk-form-item {
+  margin-bottom: 30px;
+}
+.app-login-content-form .ant-form-item-control-wrapper,
+.app-login-content-form .ant-input-group-wrapper {
+  width: 400px;
+}
+.app-login-content-form .ant-form-item-control,
+.app-login-content-form .ant-input-wrapper {
+  height: 50px;
+}
+.app-login-content-form .mk-input {
+  height: 100%;
+}
+.app-login-content-form .ant-form-explain {
+  margin-top: 5px;
+}
+.app-login-content-form-title {
+  text-align: center;
+  font-size: xx-large;
+}
+.app-login-content-form-mobile .ant-input {
+  padding-left: 32px !important;
+  font-size: large;
+}
+.app-login-content-form-password {
+  margin-bottom: 20px !important;
+}
+.app-login-content-form-password .ant-input {
+  padding-left: 32px !important;
+  font-size: large;
+}
+.app-login-content-form-forget {
+  margin-bottom: 5px !important;
+  height: auto;
+}
+.app-login-content-form-forget .ant-form-item-control {
+  height: auto;
+}
+.app-login-content-form-login {
+  margin-bottom: 5px !important;
+}
+.app-login-content-form-login .mk-btn {
+  width: 100%;
+  height: 100%;
+}
+.app-login-content-form .ant-input-prefix {
+  font-size: large;
+  color: #ccc;
+}
+.app-login-footer {
+  height: 50px;
+  flex: 0 0 58px;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+}
+
+.login-form {
+  max-width: 300px;
+}
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+}
+
+.ant-layout-content {
+  background: #00ff00;
+  margin: -100px 0 -75px;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+}
+
+.ant-layout-content:before {
+  content: '';
+  display: block;
+  /* height: 100px; */
+  width: 100%;
+}
+
+.ant-layout-content:after {
+  content: '';
+  display: block;
+  /* height: 75px; */
+  width: 100%;
 }

@@ -1,15 +1,21 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import LoginForm from '../components/Form/Login'
 
 class LoginPage extends Component {
-  static async getInitialProps({ store, isServer, pathname, query }) {
+  static async getInitialProps({ query }) {
     return { query }
   }
 
   render() {
-    return <LoginForm query={this.props.query} />
+    const { query } = this.props
+    return <LoginForm query={query} caption="ระบบคลังข้อสอบ" />
   }
+}
+
+LoginPage.propTypes = {
+  query: PropTypes.object.isRequired, // eslint-disable-line
 }
 
 export default LoginPage

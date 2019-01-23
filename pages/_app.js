@@ -1,6 +1,5 @@
 import App, { Container } from 'next/app'
 import React from 'react'
-import Head from 'next/head'
 import { ApolloProvider } from 'react-apollo'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'

@@ -4,15 +4,15 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { connect } from 'react-redux'
 
-import { isEmail, isNationalID } from '../../../lib/validations'
+import { isEmail, isMobile } from '../../../lib/validations'
 import { dispatchers } from './store'
 
 const FormItem = Form.Item
 
 class IdentityForm extends Component {
   state = {
-    citizen: '',
-    validateStatus: { citizen: '', email: '' },
+    mobile: '',
+    validateStatus: { mobile: '', email: '' },
     loading: false,
   }
 
@@ -20,6 +20,7 @@ class IdentityForm extends Component {
     actions: PropTypes.shape({
       identifySuccess: PropTypes.func.isRequired,
     }).isRequired,
+    caption: PropTypes.string.isRequired,
   }
 
   handleChange = (e, name) => {
@@ -27,21 +28,21 @@ class IdentityForm extends Component {
     const reg = /^[\s\d]+$/
     const { state } = this
 
-    if (name === 'citizen') {
-      if (value.length <= 13 && reg.test(value)) {
+    if (name === 'mobile') {
+      if (value.length <= 10 && reg.test(value)) {
         this.setState({ [name]: value })
         this.setState({
-          validateStatus: { ...state.validateStatus, citizen: 'validating' },
+          validateStatus: { ...state.validateStatus, mobile: 'validating' },
         })
       }
-      if (value.length === 13 && reg.test(value)) {
-        if (isNationalID(value)) {
+      if (value.length === 10 && reg.test(value)) {
+        if (isMobile(value)) {
           this.setState({
-            validateStatus: { ...state.validateStatus, citizen: 'success' },
+            validateStatus: { ...state.validateStatus, mobile: 'success' },
           })
         } else {
           this.setState({
-            validateStatus: { ...state.validateStatus, citizen: 'error' },
+            validateStatus: { ...state.validateStatus, mobile: 'error' },
           })
         }
       }
@@ -73,38 +74,38 @@ class IdentityForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    const { citizen } = this.state
+    const { mobile } = this.state
     const { state } = this
 
     this.setState({ loading: true })
 
-    if (!isNationalID(citizen)) {
+    if (!isMobile(mobile)) {
       this.setState({
-        validateStatus: { ...state.validateStatus, citizen: 'error' },
+        validateStatus: { ...state.validateStatus, mobile: 'error' },
         loading: false,
       })
       return
     }
 
     // eslint-disable-next-line
-    if (!isNaN(citizen) && citizen.length === 13) {
-      this.handleRequestOTP(citizen)
+    if (!isNaN(mobile) && mobile.length === 10) {
+      this.handleRequestOTP(mobile)
     } else {
       this.setState({
-        validateStatus: { ...state.validateStatus, citizen: 'error' },
+        validateStatus: { ...state.validateStatus, mobile: 'error' },
       })
     }
   }
 
-  handleRequestOTP = async (citizen) => {
+  handleRequestOTP = async (mobile) => {
     try {
       const { data } = await axios.post(
         `${process.env.REST_URL}/exam/existing-register`,
-        { citizen, school_id: process.env.SCHOOL_ID },
+        { mobile, school_id: 160 },
         { headers: { Authorization: `bearer ${process.env.REST_TOKEN}` } }
       )
 
-      this.props.actions.identifySuccess(citizen, '')
+      this.props.actions.identifySuccess(mobile, '')
 
       if (!data.existing) {
         setTimeout(() => this.setState({ loading: false }), 300)
@@ -113,7 +114,7 @@ class IdentityForm extends Component {
         const {
           data: { errorCode, message, data },
         } = await axios.get(
-          `${process.env.REST_URL}/exam/registrant?citizen_id=${citizen}&school_id=${
+          `${process.env.REST_URL}/exam/registrant?mobile_id=${mobile}&school_id=${
             process.env.SCHOOL_ID
           }`,
           { headers: { Authorization: `bearer ${process.env.REST_TOKEN}` } }
@@ -135,22 +136,24 @@ class IdentityForm extends Component {
   }
 
   render() {
+    const { caption } = this.props
+
     return (
       <Form onSubmit={this.handleSubmit} className="login-form" style={{ margin: '0 auto' }}>
-        <h2>SPT Pre-test ปีการศึกษา 2562</h2>
+        <h2>{caption}</h2>
 
         <FormItem
           hasFeedback
-          validateStatus={this.state.validateStatus.citizen}
-          help={this.state.validateStatus.citizen === 'error' ? 'หมายเลขบัตรประชาชนไม่ถูกต้อง' : ''}
+          validateStatus={this.state.validateStatus.mobile}
+          help={this.state.validateStatus.mobile === 'error' ? 'หมายเลขบัตรประชาชนไม่ถูกต้อง' : ''}
         >
           <Input
             size="large"
-            prefix={<Icon type="idcard" style={{ color: 'rgba(0,0,0,.25)' }} />}
-            placeholder="หมายเลขบัตรประชาชน 13 หลัก"
-            maxLength={13}
-            value={this.state.citizen}
-            onChange={(e) => this.handleChange(e, 'citizen')}
+            prefix={<Icon type="mobile" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="เบอร์โทรศัพท์มือถือ"
+            maxLength={10}
+            value={this.state.mobile}
+            onChange={(e) => this.handleChange(e, 'mobile')}
           />
         </FormItem>
 
@@ -176,8 +179,8 @@ class IdentityForm extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   actions: {
-    identifySuccess(citizen, email) {
-      dispatch(dispatchers.identifySuccess(citizen, email))
+    identifySuccess(mobile, email) {
+      dispatch(dispatchers.identifySuccess(mobile, email))
     },
   },
 })

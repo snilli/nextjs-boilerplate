@@ -227,6 +227,10 @@ class Demo extends React.Component {
 
   saveAddQuestionFormRef = (form) => {
     this.questionForm = form
+    this.questionForm.setFieldsValue({
+      anwserIndex: null,
+      id: [1, 2],
+    })
   }
 
   handleSelectChange = (value) => {

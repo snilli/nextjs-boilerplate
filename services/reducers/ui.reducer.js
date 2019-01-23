@@ -1,5 +1,5 @@
 const initialState = {
-  tabSelected: 1,
+  tabSelected: 3,
 }
 
 const actionTypes = {

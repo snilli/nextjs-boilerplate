@@ -7,7 +7,7 @@ const { Group: RadioGroup } = Radio
 const { Group: CheckboxGroup } = Checkbox
 
 const handleRadio = (choise, answer) => (
-  <RadioGroup defaultValue={answer} size="large">
+  <RadioGroup defaultValue={answer[0]} size="large">
     {choise.map((item, index) => (
       <Radio key={`${index}${item}`} value={item} disabled>
         {item}
@@ -26,9 +26,9 @@ const handleCheckbox = (choise, answer) => {
 
 const handleInput = () => {}
 
-const QuestionView = ({ questionList }) => (
+const QuestionView = ({ sheetQuestionList }) => (
   <div>
-    {questionList.map((item, index) => {
+    {sheetQuestionList.map((item, index) => {
       const { type, choise, answer, title } = item
       let anwser = <div />
       switch (type) {
@@ -61,7 +61,7 @@ const QuestionView = ({ questionList }) => (
 )
 
 QuestionView.propTypes = {
-  questionList: PropTypes.instanceOf(Array).isRequired,
+  sheetQuestionList: PropTypes.instanceOf(Array).isRequired,
 }
 
 export default QuestionView

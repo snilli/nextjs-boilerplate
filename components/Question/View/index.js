@@ -6,7 +6,7 @@ import InfoButton from './InfoButton'
 import QuestionView from './QuestionView'
 import Directory from './Directory'
 
-import AddQuestion from './OverallQuestion/AddQuestion'
+import AddQuestion from '../Add'
 
 const { Grid } = Card
 
@@ -53,13 +53,12 @@ class Demo extends React.Component {
   constructor(props) {
     super(props)
 
-    const data = initData(dataMock)
-
     this.state = {
-      treeData: data,
-      genData: arrayToTree(data, { parentProperty: 'parentId' }),
+      treeData: [],
+      genData: [],
       nodeSelect: root,
       questionList: [],
+      sheetQuestionList: [],
       visible: {
         folder: false,
         sheet: false,
@@ -68,6 +67,7 @@ class Demo extends React.Component {
         question: false,
       },
     }
+
     // bind this for pass to InfoButton
     this.showModal = this.showModal.bind(this)
     this.saveFolderFormRef = this.saveFolderFormRef.bind(this)
@@ -82,32 +82,38 @@ class Demo extends React.Component {
     this.handleSelectTreeNode = this.handleSelectTreeNode.bind(this)
     // bind this for add question
     this.saveAddQuestionFormRef = this.saveAddQuestionFormRef.bind(this)
-    this.handleSelectChange = this.handleSelectChange.bind(this)
+  }
+
+  componentDidMount() {
+    const data = initData(dataMock)
+    this.setState({
+      treeData: data,
+      genData: arrayToTree(data, { parentProperty: 'parentId' }),
+      questionList: questionMock,
+    })
   }
 
   handleSelectTreeNode = (selectedKeys, info) => {
     // console.log(info.node.isLeaf())
-    const { treeData } = this.state
+    const { treeData, questionList } = this.state
     const [id] = selectedKeys.map((item) => parseInt(item, 10))
     const data = treeData.filter((item) => item.id === id)
-    let questionList = []
+
+    let sheetQuestionList = []
+
     if (data.length > 0) {
       if (data[0].sheet) {
-        questionList = questionMock.filter((item) => item.parentId === data[0].id)
+        sheetQuestionList = questionList.filter((item) => item.parentId === data[0].id)
       }
 
       this.setState({
         nodeSelect: data[0],
-        questionList,
+        sheetQuestionList,
       })
     }
   }
 
   handleClickInfo = (visible) => {
-    // const { nodeSelect } = this.state
-    // if (nodeSelect.id === -1) {
-    //   return
-    // }
     this.setState({
       visible: {
         info: visible,
@@ -167,11 +173,48 @@ class Demo extends React.Component {
   handleCreateQuestion = () => {
     const { questionForm } = this
     questionForm.validateFields((err, values) => {
-      // if (!err) {
-      //   const isSheet = true
-      //   this.handleAllCreate(questionForm, values.name, isSheet, true)
-      // }
-      console.log('name ', values)
+      if (!err) {
+        const { type, title, choise, answerIndex } = values
+        const { questionList, nodeSelect, sheetQuestionList } = this.state
+
+        let answer = []
+
+        switch (type) {
+          case '1':
+            answer.push(choise.find((item, index) => index + 1 === answerIndex))
+            break
+          case '2':
+            answer = answerIndex.map((ansIndex) =>
+              choise.find((item, index) => index + 1 === ansIndex)
+            )
+            break
+          default:
+            answer = []
+        }
+
+        const questionListId = questionList.map((item) => item.id)
+
+        const maxQuestionId = Math.max(...questionListId)
+
+        const currentQuestion = {
+          id: questionListId.length > 0 ? maxQuestionId + 1 : 1,
+          parentId: nodeSelect.id,
+          type: parseInt(type, 10),
+          title,
+          choise,
+          answer,
+        }
+
+        questionList.push(currentQuestion)
+
+        if (nodeSelect.id === currentQuestion.parentId) {
+          sheetQuestionList.push(currentQuestion)
+        }
+
+        this.setState({ questionList, sheetQuestionList })
+        questionForm.resetFields()
+        this.setModelClose()
+      }
     })
   }
 
@@ -222,16 +265,18 @@ class Demo extends React.Component {
   }
 
   saveAddQuestionFormRef = (form) => {
-    this.questionForm = form
-  }
-
-  handleSelectChange = (value) => {
-    console.log(value)
+    if (form) {
+      this.questionForm = form
+      this.questionForm.setFieldsValue({
+        answerIndex: null,
+        id: [1, 2],
+      })
+    }
   }
 
   render() {
     const { genData } = this.state
-    const { nodeSelect, visible, questionList } = this.state
+    const { nodeSelect, visible, sheetQuestionList } = this.state
     return (
       <Card>
         <Grid style={gridStyle}>
@@ -264,13 +309,12 @@ class Demo extends React.Component {
               visible={visible}
               handleModelCancel={this.handleModelCancel}
               handleCreateQuestion={this.handleCreateQuestion}
-              handleSelectChange={this.handleSelectChange}
               form={this.questionForm}
             />
           )}
         </Grid>
         <Grid style={gridStyle1}>
-          {questionList.length > 0 && <QuestionView questionList={questionList} />}
+          {sheetQuestionList.length > 0 && <QuestionView sheetQuestionList={sheetQuestionList} />}
         </Grid>
       </Card>
     )

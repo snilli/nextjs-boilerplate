@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Index from '../../components/Session'
 
-class SessionIndex extends Component {
-  onLoad = (e) => {}
+const SessionIndex = (props) => (
+  <div>
+    <Index {...props} />
+  </div>
+)
 
-  render() {
-    return <div>session</div>
-  }
-}
 export default SessionIndex

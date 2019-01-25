@@ -1,4 +1,4 @@
-import { Modal, Form, Input, Select, Radio, Checkbox, Button, Icon } from 'antd'
+import { Button, Checkbox, Form, Icon, Input, Modal, Radio, Select } from 'antd'
 import React, { Component } from 'react'
 
 const { Item: FormItem, create } = Form

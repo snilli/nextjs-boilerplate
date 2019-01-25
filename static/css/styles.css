@@ -134,7 +134,7 @@
   text-decoration: none;
 }
 
-<<<<<<< head .app-login {
+.app-login {
   width: 100%;
   height: 100%;
 }
@@ -263,4 +263,17 @@
 .add-question {
   margin-right: 10px;
   float: right;
+}
+
+.steps-content {
+  margin-top: 16px;
+  border: 1px dashed #e9e9e9;
+  border-radius: 6px;
+  background-color: #fafafa;
+  min-height: 200px;
+  padding-top: 15px;
+}
+
+.steps-action {
+  margin-top: 24px;
 }

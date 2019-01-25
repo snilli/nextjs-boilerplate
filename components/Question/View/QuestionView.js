@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, Radio, Checkbox } from 'antd'
+import { Card, Checkbox, Icon, Radio } from 'antd'
 
 const { Grid } = Card
 const { Group: RadioGroup } = Radio
@@ -52,7 +52,10 @@ const QuestionView = ({ sheetQuestionList }) => (
               <br />
               {anwser}
             </div>
-            <div style={{ float: 'right' }}>button</div>
+            <div style={{ float: 'right' }}>
+              <Icon type="edit" />
+              <Icon type="delete" />
+            </div>
           </Grid>
         </div>
       )

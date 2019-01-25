@@ -1,63 +1,62 @@
-import { Transfer } from 'antd'
+import { Steps, Button, message } from 'antd'
 
-class Tran extends React.Component {
-  state = {
-    mockData: [],
-    targetKeys: [],
-  }
+const Step = Steps.Step
 
-  componentDidMount() {
-    this.getMock()
-  }
+const steps = [
+  {
+    title: 'First',
+    content: 'First-content',
+  },
+  {
+    title: 'Second',
+    content: 'Second-content',
+  },
+]
 
-  getMock = () => {
-    const targetKeys = []
-    const mockData = []
-    for (let i = 0; i < 20; i++) {
-      const data = {
-        key: i.toString(),
-        title: `สวัสดี${i + 1}`,
-        description: `สวัสดี${i + 1}`,
-        chosen: Math.random() * 2 > 1,
-      }
-      if (data.chosen) {
-        targetKeys.push(data.key)
-      }
-      mockData.push(data)
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      current: 0,
     }
-    this.setState({ mockData, targetKeys })
   }
 
-  filterOption = (inputValue, option) => option.description.indexOf(inputValue) > -1
-
-  handleChange = (targetKeys) => {
-    const d = targetKeys.map((item) => this.state.mockData.filter((item2) => item2.key === item))
-
-    const t = d.map((item) => {
-      item.score = 0
-      return item
-    })
-    console.log(JSON.stringify(t, null, 2))
-    this.setState({ targetKeys })
+  next() {
+    const current = this.state.current + 1
+    this.setState({ current })
   }
 
-  handleSearch = (dir, value) => {
-    console.log('search:', dir, value)
+  prev() {
+    const current = this.state.current - 1
+    this.setState({ current })
   }
 
   render() {
+    const { current } = this.state
     return (
-      <Transfer
-        dataSource={this.state.mockData}
-        showSearch
-        filterOption={this.filterOption}
-        targetKeys={this.state.targetKeys}
-        onChange={this.handleChange}
-        onSearch={this.handleSearch}
-        render={(item) => item.title}
-      />
+      <div>
+        <Steps current={current}>
+          {steps.map((item) => (
+            <Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
+        <div className="steps-content">{steps[current].content}</div>
+        <div className="steps-action">
+          {current < steps.length - 1 && (
+            <Button type="primary" onClick={() => this.next()}>
+              Next
+            </Button>
+          )}
+
+          {current > 0 && (
+            <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
+              Previous
+            </Button>
+          )}
+        </div>
+      </div>
     )
   }
 }
 
-export default Tran
+export default App

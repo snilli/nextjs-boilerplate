@@ -3,7 +3,7 @@ import View from '../../components/Question/View'
 
 const ExamView = (props) => (
   <div>
-    <View />
+    <View {...props} />
   </div>
 )
 

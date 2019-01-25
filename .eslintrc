@@ -32,6 +32,15 @@
       {
         "components": ["Link"]
       }
+    ],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["multiple", "single", "all", "none"]
+      }
     ]
   },
   "plugins": ["prettier"]

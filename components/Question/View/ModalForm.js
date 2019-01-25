@@ -1,4 +1,4 @@
-import { Modal, Form, Input } from 'antd'
+import { Form, Input, Modal } from 'antd'
 import React from 'react'
 
 const { Item: FormItem, create } = Form
@@ -6,6 +6,7 @@ const { Item: FormItem, create } = Form
 const ModelForm = create()((props) => {
   const { visible, onCancel, onCreate, form, title } = props
   const { getFieldDecorator } = form
+
   return (
     <Modal visible={visible} title={title} okText="Create" onCancel={onCancel} onOk={onCreate}>
       <Form layout="vertical">

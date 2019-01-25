@@ -1,4 +1,4 @@
-import { Menu, Icon, Layout, Drawer, Modal } from 'antd'
+import { Menu, Icon, Layout, Drawer, Modal, Button } from 'antd'
 import React, { Component } from 'react'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
@@ -102,8 +102,11 @@ class MainPage extends Component {
   }
 
   render() {
-    const { children, ui, title } = this.props
+    const { children, ui, title, router } = this.props
     const { placement, visible } = this.state
+
+    const findPath = tabData.find((item) => item.path === router.route)
+    const activeSelected = findPath ? findPath.path : '/'
     return (
       <div style={{ height: '100%' }}>
         <Head>
@@ -128,7 +131,12 @@ class MainPage extends Component {
                 </div>
               </Link>
               <div className="drawer-handle">
-                <Icon className="trigger" type="menu" onClick={this.showDrawer} />
+                <Button
+                  className="trigger"
+                  style={{ border: 'none' }}
+                  icon="menu"
+                  onClick={this.showDrawer}
+                />
               </div>
             </Header>
 
@@ -146,7 +154,6 @@ class MainPage extends Component {
           <Drawer
             title={
               <div>
-                {' '}
                 <img className="drawer-header-logo" src="/static/nextschool.png" alt="logo" />
                 คลังข้อสอบ
               </div>
@@ -156,10 +163,10 @@ class MainPage extends Component {
             onClose={this.onClose}
             visible={visible}
           >
-            <Menu mode="inline" defaultSelectedKeys={[ui.tabSelected.toString()]}>
+            <Menu mode="inline" defaultSelectedKeys={[activeSelected]}>
               {tabData.map((item) => (
                 <Menu.Item
-                  key={item.id}
+                  key={item.path}
                   onClick={item.path !== '/logout' ? this.onClose : this.showConfirm}
                 >
                   <Link href={item.path !== '/logout' ? item.path : '#'}>

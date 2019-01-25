@@ -5,7 +5,9 @@ import routeConfig from '../constrants/route'
 
 const Page = (props) => {
   const { router } = props
-  const { title } = routeConfig.find((route) => route.path === router.route)
+  const currentRoute = routeConfig.find((route) => route.path === router.route)
+
+  const title = currentRoute ? currentRoute.title : ''
 
   return router.route === '/login' ? (
     <Blank title={title} {...props} />

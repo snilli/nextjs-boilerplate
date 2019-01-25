@@ -1,4 +1,4 @@
-import { Card } from 'antd'
+import { Card, Input } from 'antd'
 import arrayToTree from 'array-to-tree'
 import React from 'react'
 
@@ -9,6 +9,7 @@ import Directory from './Directory'
 import AddQuestion from '../Add'
 
 const { Grid } = Card
+const { Search } = Input
 
 const dataMock = require('./mockTree.json')
 const questionMock = require('./question.json')
@@ -288,7 +289,13 @@ class Demo extends React.Component {
         </Grid>
 
         <Grid style={gridStyle1}>
-          {nodeSelect.id}
+          <Search
+            style={{ width: '80%' }}
+            placeholder="input search text"
+            onSearch={(value) => console.log(value)}
+            enterButton
+          />
+          {/* {nodeSelect.id} */}
           <InfoButton
             visible={visible}
             nodeSelect={nodeSelect}

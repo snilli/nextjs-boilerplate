@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Index from '../../components/Exam'
 
-class QuestionIndex extends Component {
-  onLoad = (e) => {}
+const SessionIndex = (props) => (
+  <div>
+    <Index {...props} />
+  </div>
+)
 
-  render() {
-    return <div>exam</div>
-  }
-}
-export default QuestionIndex
+export default SessionIndex

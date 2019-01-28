@@ -1,12 +1,11 @@
 import { Card, Input } from 'antd'
-import arrayToTree from 'array-to-tree'
-import React from 'react'
-
-import InfoButton from './InfoButton'
-import QuestionView from './QuestionView'
-import Directory from './Directory'
 
 import AddQuestion from '../Add'
+import Directory from './Directory'
+import InfoButton from './InfoButton'
+import QuestionView from './QuestionView'
+import React from 'react'
+import arrayToTree from 'array-to-tree'
 
 const { Grid } = Card
 const { Search } = Input
@@ -50,7 +49,7 @@ const initData = (data) => {
   return getRoot
 }
 
-class Demo extends React.Component {
+class VeiwIndex extends React.Component {
   constructor(props) {
     super(props)
 
@@ -66,6 +65,7 @@ class Demo extends React.Component {
         info: false,
         rename: false,
         question: false,
+        sheetQuestionList: [],
       },
     }
 
@@ -85,7 +85,7 @@ class Demo extends React.Component {
     this.saveAddQuestionFormRef = this.saveAddQuestionFormRef.bind(this)
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const data = initData(dataMock)
     this.setState({
       treeData: data,
@@ -107,9 +107,15 @@ class Demo extends React.Component {
         sheetQuestionList = questionList.filter((item) => item.parentId === data[0].id)
       }
 
+      const { visible } = this.state
+
       this.setState({
         nodeSelect: data[0],
         sheetQuestionList,
+        visible: {
+          ...visible,
+          sheetQuestionList: sheetQuestionList.map((item) => !item),
+        },
       })
     }
   }
@@ -328,4 +334,4 @@ class Demo extends React.Component {
   }
 }
 
-export default Demo
+export default VeiwIndex

@@ -1,5 +1,5 @@
+import { Card, Divider, List, Tabs } from 'antd'
 import React, { Component } from 'react'
-import { Tabs, Divider, Card, List } from 'antd'
 
 const { TabPane } = Tabs
 
@@ -43,7 +43,7 @@ const ListContent = ({ id }) => (
   />
 )
 
-class index extends Component {
+class SessionIndexComponent extends Component {
   onTest = () => {}
 
   render() {
@@ -69,4 +69,4 @@ class index extends Component {
   }
 }
 
-export default index
+export default SessionIndexComponent

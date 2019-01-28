@@ -10,8 +10,8 @@ import {
   TimePicker,
   Transfer,
 } from 'antd'
-import React from 'react'
 
+import React from 'react'
 import moment from 'moment'
 
 const dataMock = require('../Question/View/question.json')

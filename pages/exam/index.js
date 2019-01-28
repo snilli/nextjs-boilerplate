@@ -1,10 +1,10 @@
-import React from 'react'
 import Index from '../../components/Exam'
+import React from 'react'
 
-const SessionIndex = (props) => (
+const ExamIndex = (props) => (
   <div>
     <Index {...props} />
   </div>
 )
 
-export default SessionIndex
+export default ExamIndex

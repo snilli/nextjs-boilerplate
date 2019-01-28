@@ -1,6 +1,6 @@
-import { Tree } from 'antd'
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
+import { Tree } from 'antd'
 
 const { TreeNode } = Tree
 const { DirectoryTree } = Tree

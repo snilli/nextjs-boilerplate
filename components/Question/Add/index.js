@@ -1,7 +1,8 @@
-import { Button } from 'antd'
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+
+import { Button } from 'antd'
 import ModalForm from './ModalForm'
+import PropTypes from 'prop-types'
 
 class AddQuestion extends Component {
   constructor(props) {

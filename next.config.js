@@ -5,7 +5,7 @@ const Dotenv = require('dotenv-webpack')
 const withLess = require('@zeit/next-less')
 const lessToJS = require('less-vars-to-js')
 const fs = require('fs')
-
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin')
 // Where your antd-custom.less file lives
 const themeVariables = lessToJS(
   fs.readFileSync(path.resolve(__dirname, './assets/antd-custom.less'), 'utf8')
@@ -33,6 +33,12 @@ module.exports = withLess({
         systemvars: true,
       }),
     ]
+
+    config.plugins.push(
+      new FilterWarningsPlugin({
+        exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
+      })
+    )
 
     return config
   },

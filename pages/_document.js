@@ -1,6 +1,7 @@
 import Document, { Head, Main, NextScript } from 'next/document'
-import React from 'react'
+
 import AppIcons from '../components/AppIcons'
+import React from 'react'
 
 export default class MyDocument extends Document {
   render() {

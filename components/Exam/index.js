@@ -23,7 +23,7 @@ const data = [
   // },
 ]
 
-class Index extends Component {
+class ExamIndexComponent extends Component {
   // state = { modal: [false, false, false] }
   state = { modal: false }
 
@@ -97,14 +97,6 @@ class Index extends Component {
                   <Icon type="delete" />
                 </div>
               </Card>
-              {/* <List.Item.Meta
-                title={
-                  <div>
-                    <h2>ชื่อชุด: {}</h2>
-                    
-                  </div>
-                }
-              /> */}
             </List.Item>
           )}
         />
@@ -113,4 +105,4 @@ class Index extends Component {
   }
 }
 
-export default Index
+export default ExamIndexComponent

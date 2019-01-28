@@ -1,6 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { Card, Checkbox, Icon, Radio } from 'antd'
+
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const { Grid } = Card
 const { Group: RadioGroup } = Radio

@@ -1,7 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { Button, Popover } from 'antd'
+
 import ModalForm from './ModalForm'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const InfoButton = ({
   visible,

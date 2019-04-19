@@ -1,3 +1,4 @@
 import ClassRoomSelector from './Classroom'
+import RfidSelector from './Rfid'
 
-export {ClassRoomSelector}
+export { ClassRoomSelector, RfidSelector }

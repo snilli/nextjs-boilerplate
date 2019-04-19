@@ -17,9 +17,29 @@ import {
   Typography,
 } from 'antd'
 
+import { Query } from 'react-apollo'
+import gql from 'graphql-tag'
+
 const { Item: FormItem, create } = Form
 const { TextArea } = Input
 const { Title, Text, Paragraph } = Typography
+
+const GET_STUDENTLIST = gql`
+  query StudentTable($classroomId: Int!) {
+    allStudentByActiveClassroom(classroomId: $classroomId) {
+      id
+      code
+      titleName
+      fullName
+      imageUrl
+      cardNo
+      classRoomInfo {
+        fullName
+      }
+    }
+  }
+`
+
 const columns = [
   {
     title: 'ลำดับที่',
@@ -116,35 +136,29 @@ const data = [
 class StudentTable extends Component {
   state = {
     percent: 90,
+    loading: false,
   }
 
   onChange = (value) => {
     console.log(value)
   }
 
+  handleToggle = (prop) => (enable) => {
+    this.setState({ [prop]: enable })
+  }
+
   render() {
-    const { visible, onCancel, onCreate, form, title } = this.props
+    const { visible, onCancel, onCreate, form, title, classroomId, totalStudent } = this.props
     const { getFieldDecorator, getFieldValue } = form
     const { type } = form.getFieldsValue()
-    return (
+
+    console.log(this.props)
+
+    return classroomId === null ? null : (
       <div>
-        <Form layout="vertical">
-          <FormItem label="RFID">
-            {getFieldDecorator('rfid', {
-              rules: [{ required: true, message: 'สแกนบัตรก่อนสิ' }],
-            })(
-              <Input
-                size="large"
-                placeholder="สแกนบัตร"
-                required
-                prefix={<Icon type="idcard" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              />
-            )}
-          </FormItem>
-        </Form>
         <Row type="flex" justify="space-between">
           <Col span={12}>
-            <Title level={3}>จำนวนนักเรียน 43 คน</Title>
+            <Title level={3}>จำนวนนักเรียน {totalStudent} คน</Title>
             <Paragraph strong level={4}>
               บัตรจริง <Text code>40</Text> ใบ บัตรขาว <Text code>3</Text> ใบ
             </Paragraph>
@@ -158,7 +172,28 @@ class StudentTable extends Component {
           </Col>
         </Row>
 
-        <Table size="middle" columns={columns} dataSource={data} />
+        <Query query={GET_STUDENTLIST} variables={{ classroomId }}>
+          {({ loading, error, data }) => {
+            if (loading) return <div>loading</div>
+            if (error) return `[[Error!]]: ${error}`
+
+            const studentData = data.allStudentByActiveClassroom.map((student, index) => ({
+              key: index + 1,
+              name: `${student.titleName} ${student.fullName}`,
+              age: student.code,
+              address: <img alt={student.id} src={student.imageUrl} width="48" />,
+              tags: ['บัตรจริง', 'เช็คแล้ว'],
+            }))
+            return (
+              <Table
+                size="middle"
+                columns={columns}
+                dataSource={studentData}
+                pagination={{ pageSize: 60 }}
+              />
+            )
+          }}
+        </Query>
 
         <Form layout="vertical">
           <FormItem label="เช็คบัตรแล้ว">

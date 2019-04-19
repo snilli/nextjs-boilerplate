@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { ClassRoomSelector } from '../components/School/Selector'
+import { ClassRoomSelector, RfidSelector } from '../components/School/Selector'
 import { StudentTable } from '../components/Student'
 
 const GET_CHILD_IN_HOODS = gql`
@@ -54,7 +54,7 @@ class ApolloIndex extends Component {
     return (
       <div>
         <ClassRoomSelector />
-        <StudentTable />
+        <RfidSelector />
         {/* <ChildInHood parentId={128851} /> */}
       </div>
     )

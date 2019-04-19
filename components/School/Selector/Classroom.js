@@ -66,7 +66,7 @@ class ClassRoomSelector extends Component {
       <div>
         <Query query={GET_CLASSROOM}>
           {({ loading, error, data }) => {
-            if (loading) return null
+            if (loading) return <div>รอก่อน</div>
             if (error) return `[[Error!]]: ${error}`
 
             const classData = data.allSchool.map((school) => ({

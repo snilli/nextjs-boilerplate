@@ -7,20 +7,18 @@ import { StudentTable } from '../../Student'
 const { Item: FormItem, create } = Form
 const { Option } = Select
 
-const GET_CLASSROOM = gql`
-  query School {
-    allSchool(where: { status: 10, id: { notIn: [5, 126, 132] } }) {
+const GET_STUDENT_INFO = gql`
+  query Student($rfid: String!) {
+    byRFID(rfid: $rfid) {
       id
-      name
-      classList {
-        id
-        name
-        totalStudent
-        classroomList {
-          id
-          classRoomName
-          totalStudent
-        }
+      code
+      title
+      titleName
+      fullName
+      imageUrl
+      cardNo
+      classRoomInfo {
+        fullName
       }
     }
   }

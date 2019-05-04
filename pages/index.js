@@ -1,29 +1,21 @@
-import React from 'react'
-import Router from 'next/router'
-import Link from 'next/link'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-const Index = (props) => (
-  <div>
-    <button
-      type="button"
-      onClick={() =>
-        Router.push({
-          pathname: '/',
-          query: { name: 'Zeit' },
-        })
-      }
-    >
-      sdsd
-    </button>
-    <Link
-      href={{
-        pathname: '/',
-        query: { name: 'Zeit' },
-      }}
-    >
-      <a>555</a>
-    </Link>
-  </div>
-)
+import LoginForm from '../components/Form/Login'
 
-export default Index
+class LoginPage extends Component {
+  static async getInitialProps({ query }) {
+    return { query }
+  }
+
+  render() {
+    const { query } = this.props
+    return <LoginForm query={query} caption="ระบบคลังข้อสอบ" />
+  }
+}
+
+LoginPage.propTypes = {
+  query: PropTypes.object.isRequired, // eslint-disable-line
+}
+
+export default LoginPage

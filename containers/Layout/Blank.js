@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { withRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
-import { Layout, Icon, Row, Col } from 'antd'
+import { Col, Icon, Layout, Row } from 'antd'
 
 const { Header, Footer } = Layout
 

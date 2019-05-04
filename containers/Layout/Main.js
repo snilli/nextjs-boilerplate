@@ -1,13 +1,8 @@
-import { Menu, Icon, Layout, Drawer, Modal, Button } from 'antd'
+import { Button, Drawer, Icon, Layout, Menu, Modal } from 'antd'
 import React, { Component } from 'react'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import Link from 'next/link'
-import {
-  actionCreators as uiActionCreators,
-  initialState,
-} from '../../services/reducers/ui.reducer'
 
 const { Header, Content, Footer } = Layout
 const { confirm } = Modal
@@ -15,30 +10,12 @@ const { confirm } = Modal
 const tabData = [
   {
     id: 1,
-    title: 'Question',
+    title: 'เพิ่มเบอร์ผู้ปกครอง',
     icon: 'user',
-    path: '/question',
+    path: '/',
   },
   {
     id: 2,
-    title: 'Exam',
-    icon: 'user',
-    path: '/exam',
-  },
-  {
-    id: 3,
-    title: 'Session',
-    icon: 'user',
-    path: '/session',
-  },
-  {
-    id: 4,
-    title: 'Apollo',
-    icon: 'user',
-    path: '/apollo',
-  },
-  {
-    id: 5,
     title: 'Log Out',
     icon: 'user',
     path: '/logout',
@@ -48,17 +25,7 @@ const tabData = [
 class MainPage extends Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
-    actions: PropTypes.shape({
-      changeTab: PropTypes.func.isRequired,
-    }).isRequired,
-    ui: PropTypes.shape({
-      tabSelected: PropTypes.number.isRequired,
-    }),
     title: PropTypes.string.isRequired,
-  }
-
-  static defaultProps = {
-    ui: initialState,
   }
 
   state = { visible: false, placement: 'right' }
@@ -66,8 +33,6 @@ class MainPage extends Component {
   onClickSlider = (event) => {
     const { textContent: content } = event.target
     const tabSelected = tabData.findIndex((item) => item.title === content) + 1
-    const { actions } = this.props
-    actions.changeTab(tabSelected)
   }
 
   showDrawer = () => {
@@ -102,7 +67,7 @@ class MainPage extends Component {
   }
 
   render() {
-    const { children, ui, title, router } = this.props
+    const { children, title, router } = this.props
     const { placement, visible } = this.state
 
     const findPath = tabData.find((item) => item.path === router.route)
@@ -118,18 +83,19 @@ class MainPage extends Component {
               className="app-header"
               style={{
                 position: 'fixed',
-                zIndex: 1,
+                backgroundColor: '#ffffff',
+                zIndex: 3,
                 width: '100%',
                 paddingTop: '5px',
                 paddingLeft: '40px',
               }}
             >
-              <Link href="/">
-                <div>
-                  <img className="app-header-logo" src="/static/logo.png" alt="logo" />
-                  โรงเรียนสตรีพัทลุง
-                </div>
-              </Link>
+              {/* <Link href="/"> */}
+              <div>
+                <img className="app-header-logo" src="/static/nextschool.png" alt="logo" />
+                NextSchool.io
+              </div>
+              {/* </Link> */}
               <div className="drawer-handle">
                 <Button
                   className="trigger"
@@ -140,7 +106,7 @@ class MainPage extends Component {
               </div>
             </Header>
 
-            <Content style={{ margin: '80px 16px 40px' }}>
+            <Content style={{ margin: '80px 16px 0px' }}>
               <div style={{ padding: 24, background: '#fff', minHeight: '100vh' }}>{children}</div>
             </Content>
 
@@ -155,7 +121,7 @@ class MainPage extends Component {
             title={
               <div>
                 <img className="drawer-header-logo" src="/static/nextschool.png" alt="logo" />
-                คลังข้อสอบ
+                จัดการข้อมูลผู้ปกครอง
               </div>
             }
             placement={placement}
@@ -185,19 +151,4 @@ class MainPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  ...state,
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  actions: {
-    changeTab(tabSelected) {
-      dispatch(uiActionCreators.changeTab(tabSelected))
-    },
-  },
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MainPage)
+export default MainPage

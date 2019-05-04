@@ -7,6 +7,8 @@
   ],
   "parser": "babel-eslint",
   "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "no-use-before-define": [
       "error",
       { "functions": true, "classes": true, "variables": false }
@@ -43,5 +45,5 @@
       }
     ]
   },
-  "plugins": ["prettier"]
+  "plugins": ["prettier", "react-hooks"]
 }

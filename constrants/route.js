@@ -1,2 +1,2 @@
-const routeConfig = [{ path: '/login', title: 'เข้าสู่ระบบ' }, { path: '/', title: 'คลังข้อสอบ' }]
+const routeConfig = [{ path: '/', title: 'เพิ่มเบอร์ผู้ปกครอง' }]
 export default routeConfig

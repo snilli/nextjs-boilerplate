@@ -10,7 +10,7 @@ class LoginPage extends Component {
 
   render() {
     const { query } = this.props
-    return <LoginForm query={query} caption="ระบบคลังข้อสอบ" />
+    return <LoginForm query={query} caption="เพิ่มเบอร์ผู้ปกครอง" />
   }
 }
 

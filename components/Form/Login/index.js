@@ -3,10 +3,10 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import axios from 'axios'
 
+import Block from './block'
+import Complete from './complete'
 import { isCode, isMobile, isNationalID } from '../../../lib/validations'
 import { MainContext } from '../../../controllers/main'
-
-const { Title, Text } = Typography
 
 const { Item: FormItem } = Form
 
@@ -132,24 +132,26 @@ const IdentityForm = (props) => {
       })
       // eslint-disable-next-line
       if (validateMobile && validateCitizen && validateCode) {
-        actions.d(citizen, code, mobile)
+        actions.processSavePhone(citizen, code, mobile)
       }
     },
-    async d(citizen, code, mobile) {
+    async processSavePhone(citizen, code, mobile) {
       const codeByCitizenError = await codeByCitizen(citizen)
       if (codeByCitizenError === 404) {
-        const saveParentLogError = await saveParentLog(citizen)
-        if (saveParentLogError === 0) {
-          Main.actions.setCitizen(citizen, true)
+        const { saveParentLogError, canAccessAt } = await saveParentLog(citizen)
+        if (saveParentLogError) {
+          Main.actions.setCitizen(citizen, true, canAccessAt, saveParentLogError)
         }
       } else {
         const saveParentPhoneStatus = await saveParentPhone(citizen, code, mobile)
+        // 3167403166349
         if (saveParentPhoneStatus === 'ok') {
           Main.actions.afterSave()
         } else if (saveParentPhoneStatus.length === 0) {
-          const saveParentLogError = await saveParentLog(citizen)
-          if (saveParentLogError === 0) {
-            Main.actions.setCitizen(citizen, true)
+          console.log(123)
+          const { saveParentLogError, canAccessAt } = await saveParentLog(citizen)
+          if (saveParentLogError) {
+            Main.actions.setCitizen(citizen, true, canAccessAt, saveParentLogError)
           }
         }
       }
@@ -181,22 +183,22 @@ const IdentityForm = (props) => {
 
   const saveParentLog = async (citizen) => {
     const {
-      data: { errorCode: saveParentLogError },
+      data: { errorCode: saveParentLogError, canAccessAt },
     } = await axios.post(`${process.env.REST_URL_LOCAL}/v1/student/save-parent-log`, {
       citizen,
     })
-    return saveParentLogError
+    return { saveParentLogError, canAccessAt }
   }
 
   const saveParentPhone = async (citizen, code, mobile) => {
     const {
-      data: { status: saveParentPhoneStatus },
+      data: { status },
     } = await axios.post(`${process.env.REST_URL_LOCAL}/v1/identity/validate`, {
       citizen,
       code,
       mobile,
     })
-    return saveParentPhoneStatus
+    return status
   }
 
   useEffect(() => {
@@ -205,107 +207,19 @@ const IdentityForm = (props) => {
     }
   }, []) // eslint-disable-line
 
-  if (Main.state && Main.state.is_save_phone) {
+  if (Main.state && Main.state.isSavePhone) {
     return (
-      <Row style={{ textAlign: 'center' }}>
-        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12, offset: 6 }}>
-          <Row>
-            <Col
-              xs={{ span: 18, offset: 3 }}
-              sm={{ span: 18, offset: 3 }}
-              md={{ span: 16, offset: 4 }}
-            >
-              <Title level={2}>ท่านสามารถเข้าใช้งาน Application NextSchool ได้แล้วในขณะนี้</Title>
-              <Text>
-                โดยการแสกน QR code เพื่อ Download
-                หรือกดปุ่มด้านล่างเพื่อกลับไปเพิ่มเบอร์ผู้ปกครองท่านอื่นที่ต้องการทราบข้อมูลบุคหลานของท่าน
-              </Text>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: '38px', marginBottom: '38px' }}>
-            <Col span={12} style={{ textAlign: 'right' }}>
-              <img
-                style={{ width: '100%', maxWidth: '200px' }}
-                src="/static/qr_code.png"
-                alt="qr_code"
-              />
-            </Col>
-            <Col span={12} style={{ textAlign: 'left' }}>
-              <img style={{ width: '100%', maxWidth: '220px' }} src="/static/ok.png" alt="logo" />
-            </Col>
-          </Row>
-          <Col xs={{ span: 18, offset: 3 }} md={{ span: 12, offset: 6 }}>
-            <Button
-              size="large"
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-              onClick={() => {
-                Main.actions.resetState()
-                actions.resetState()
-              }}
-              loading={state.loading}
-            >
-              กลับไปเพิ่มเบอร์ใหม่
-            </Button>
-          </Col>
-        </Col>
-      </Row>
+      <Complete
+        loading={state.loading}
+        localReset={Main.actions.resetState}
+        stateReset={actions.resetState}
+      />
     )
   }
   // 3167403166349
 
   if (Main.state.fetchCheck) {
-    return (
-      <Row style={{ textAlign: 'center' }}>
-        <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12, offset: 6 }}>
-          <Row>
-            <Col
-              xs={{ span: 18, offset: 3 }}
-              sm={{ span: 18, offset: 3 }}
-              md={{ span: 16, offset: 4 }}
-            >
-              <Title level={2}>ข้อมูลของบุตรหลานท่าน ที่ส่งเข้ามาไม่ตรงกับข้อมูลในระบบ</Title>
-              <Title level={4}>
-                ทางระบบจึงขอระงับการเพิ่มเบอร์ของท่านช่วงคราว โปรดลองใหม่ในอีก ตตตต นาที
-              </Title>
-            </Col>
-          </Row>
-          <Row style={{ marginBottom: '38px' }}>
-            <Col span={24}>
-              <img style={{ width: '100%', maxWidth: '200px' }} src="/static/help.png" alt="help" />
-            </Col>
-            <Col
-              xs={{ span: 16, offset: 4 }}
-              sm={{ span: 16, offset: 4 }}
-              md={{ span: 24, offset: 0 }}
-            >
-              <Text>
-                หากท่านพบเจอปัญหาในการใช้งาน Application สามารถติดต่อเข้ามาได้จากช่องทางด้านล่าง
-              </Text>
-            </Col>
-            <Col span={12} style={{ textAlign: 'right' }}>
-              <a href="https://line.me/R/ti/p/%40bnh5161k">
-                <img
-                  style={{ width: '100%', maxWidth: '100px' }}
-                  src="/static/line.png"
-                  alt="line-nextschool"
-                />
-              </a>
-            </Col>
-            <Col span={12} style={{ textAlign: 'left' }}>
-              <a href="http://m.me/NextSchool.io">
-                <img
-                  style={{ width: '100%', maxWidth: '88px', marginTop: '6px' }}
-                  src="/static/facebook.png"
-                  alt="facebook-nextschool"
-                />
-              </a>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    )
+    return <Block canAccessAt={Main.state.canAccessAt} errorCode={Main.state.errorCode} />
   }
 
   return (
@@ -368,9 +282,5 @@ const IdentityForm = (props) => {
     </Form>
   )
 }
-
-// export default IdentityForm
-
-// const WrappedIdentityForm = Form.create()(IdentityForm)
 
 export default IdentityForm

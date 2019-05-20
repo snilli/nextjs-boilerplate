@@ -7,16 +7,20 @@ const useMain = () => {
   const initialState = {
     citizen: '',
     fetchCheck: false,
-    is_save_phone: false,
+    isSavePhone: false,
+    canAccessAt: null,
+    errorCode: 0,
   }
 
   const [state, setState] = useCounterState(initialState)
   const actions = {
-    setCitizen: (citizen, fetchCheck = false) => {
+    setCitizen: (citizen, fetchCheck = false, canAccessAt = null, errorCode = 0) => {
       setState({
         ...state,
         citizen,
         fetchCheck,
+        canAccessAt,
+        errorCode,
       })
     },
     resetState: () => {
@@ -28,7 +32,7 @@ const useMain = () => {
     afterSave: () => {
       setState({
         ...state,
-        is_save_phone: true,
+        isSavePhone: true,
       })
     },
     setParentLogCheck: () => {

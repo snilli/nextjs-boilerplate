@@ -10,8 +10,8 @@ const Complete = ({ loading, localReset, stateReset }) => (
         <Col xs={{ span: 18, offset: 3 }} sm={{ span: 18, offset: 3 }} md={{ span: 16, offset: 4 }}>
           <Title level={2}>ท่านสามารถเข้าใช้งาน Application NextSchool ได้แล้วในขณะนี้</Title>
           <Text>
-            โดยการแสกน QR code เพื่อ Download
-            หรือกดปุ่มด้านล่างเพื่อกลับไปเพิ่มเบอร์ผู้ปกครองท่านอื่นที่ต้องการทราบข้อมูลบุคหลานของท่าน
+            โดยการสแกน QR code เพื่อ Download
+            หรือกดปุ่มด้านล่างเพื่อกลับไปเพิ่มเบอร์ผู้ปกครองท่านอื่นที่ต้องการทราบข้อมูลบุตรหลานของท่าน
           </Text>
         </Col>
       </Row>

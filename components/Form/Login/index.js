@@ -164,10 +164,10 @@ const IdentityForm = (props) => {
   const fetchParentLog = async (citizen) => {
     const {
       data: { errorCode },
-    } = await axios.post(`${process.env.REST_URL_LOCAL}/v1/student/check-parent-log`, {
+    } = await axios.post(`${process.env.REST_URL}/v1/student/check-parent-log`, {
       citizen,
     })
-    if (errorCode === 0) {
+    if (errorCode === 0 || errorCode === 404) {
       Main.actions.setCitizen('')
     }
   }
@@ -175,7 +175,7 @@ const IdentityForm = (props) => {
   const codeByCitizen = async (citizen) => {
     const {
       data: { errorCode: codeByCitizenError },
-    } = await axios.post(`${process.env.REST_URL_LOCAL}/v1/student/code-by-citizen`, {
+    } = await axios.post(`${process.env.REST_URL}/v1/student/code-by-citizen`, {
       citizen,
     })
     return codeByCitizenError
@@ -184,7 +184,7 @@ const IdentityForm = (props) => {
   const saveParentLog = async (citizen) => {
     const {
       data: { errorCode: saveParentLogError, canAccessAt },
-    } = await axios.post(`${process.env.REST_URL_LOCAL}/v1/student/save-parent-log`, {
+    } = await axios.post(`${process.env.REST_URL}/v1/student/save-parent-log`, {
       citizen,
     })
     return { saveParentLogError, canAccessAt }
@@ -193,7 +193,7 @@ const IdentityForm = (props) => {
   const saveParentPhone = async (citizen, code, mobile) => {
     const {
       data: { status },
-    } = await axios.post(`${process.env.REST_URL_LOCAL}/v1/identity/validate`, {
+    } = await axios.post(`${process.env.REST_URL}/v1/identity/validate`, {
       citizen,
       code,
       mobile,

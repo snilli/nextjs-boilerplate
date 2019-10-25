@@ -1,12 +1,12 @@
-import { Menu, Icon, Layout, Drawer, Modal, Button } from 'antd'
+import { Button, Drawer, Icon, Layout, Menu, Modal } from 'antd'
 import React, { Component } from 'react'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Link from 'next/link'
 import {
-  actionCreators as uiActionCreators,
   initialState,
+  actionCreators as uiActionCreators,
 } from '../../services/reducers/ui.reducer'
 
 const { Header, Content, Footer } = Layout
@@ -122,6 +122,7 @@ class MainPage extends Component {
                 width: '100%',
                 paddingTop: '5px',
                 paddingLeft: '40px',
+                lineHeight: '30px',
               }}
             >
               <Link href="/">

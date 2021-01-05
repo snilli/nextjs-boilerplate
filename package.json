@@ -18,7 +18,7 @@
     "apollo-link-error": "^1.1.5",
     "apollo-link-http": "^1.5.9",
     "array-to-tree": "^3.3.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-plugin-import": "^1.11.0",
     "dotenv-webpack": "^1.6.0",
     "graphql": "^14.1.1",
